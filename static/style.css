@@ -452,6 +452,13 @@ input.soundSourceDropdown{
   display: inline-block;
   position: relative;
   bottom:50%;
+  width: 50%;
+}
+
+.scoreBarWrapperFiveBand {
+  display: inline-block;
+  position: relative;
+  bottom:50%;
   max-width: 50%;
 
 }
