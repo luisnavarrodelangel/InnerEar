@@ -49,7 +49,9 @@ thresholdOfSilenceConfigWidget i = radioConfigWidget explanation msg configs i
     msg = "Please choose the level of attenuation for this exercise:"
 
 displayEval :: MonadWidget t m => Dynamic t (Map Answer Score) -> m ()
-displayEval = displayMultipleChoiceEvaluationGraph' "Session Performance" "" answers
+displayEval mapScore =  displayMultipleChoiceEvaluationGraph' "Session Performance" "" answers mapScore
+--displayHistoricalEvaluationGraph "Historical performance" "" answers mapScore mapScore
+--
 
 generateQ :: Config -> [Datum Config [Answer] Answer (Map Answer Score)] -> IO ([Answer],Answer)
 generateQ _ _ = randomMultipleChoiceQuestion answers
