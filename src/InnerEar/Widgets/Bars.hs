@@ -153,6 +153,9 @@ faintedXaxis s = svgClass "svg" s $ return ()
 faintedLineToAdjustGraph :: MonadWidget t m => String -> m ()
 faintedLineToAdjustGraph c = svgClass "svg" c $ return ()
 
+segmentedXaxis :: MonadWidget t m => String -> m ()
+segmentedXaxis s = svgClass "svg" s $ return ()
+
 -- A dynamic bar for (Maybe Score)
 scoreBar :: MonadWidget t m => String -> Dynamic t (Maybe Score) -> m ()
 scoreBar key score  = elClass "div" "scoreBarWrapper" $ do
@@ -164,5 +167,6 @@ scoreBar key score  = elClass "div" "scoreBarWrapper" $ do
   let b2 = emptyScoreLabel >> faintedLineCSS "svgFaintedLine" >> dynBarCSS' percent (constDyn 100)
   flippableDyn b2 (return ()) bool
   faintedLineToAdjustGraph "faintedLineToAdjustGraph"
+  segmentedXaxis "segmentedXaxis"
   xLabel "xLabel" key
   mapDyn questionsAsked score' >>= dynCountLabel (constDyn "countLabel")

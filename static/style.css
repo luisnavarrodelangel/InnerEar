@@ -217,9 +217,15 @@ button.correctButton{
     background-color: #2F4F4F;
    position: relative;
    top: 16.5%;
-
-
   }
+
+.segmentedXaxis {
+  width : 10%;
+  height: 1%;
+  background-color: #2F4F4F;
+ position: relative;
+ top: 16.5%;
+}
 
 .faintedYaxis {
     width : 1%;
