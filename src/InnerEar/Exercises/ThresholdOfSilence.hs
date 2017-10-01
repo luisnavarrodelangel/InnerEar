@@ -58,7 +58,7 @@ thresholdOfSilenceConfigWidget i = radioConfigWidget instructionsText msg config
 displayEval :: MonadWidget t m => Dynamic t (Map Answer Score) -> m ()
 displayEval mapScore =  displayMultipleChoiceEvaluationGraph' "Session Performance" "" answers mapScore
 --displayHistoricalEvaluationGraph "Historical performance" "" answers mapScore mapScore
---
+
 
 generateQ :: Config -> [Datum Config [Answer] Answer (Map Answer Score)] -> IO ([Answer],Answer)
 generateQ _ _ = randomMultipleChoiceQuestion answers

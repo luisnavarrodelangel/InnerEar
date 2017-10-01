@@ -15,7 +15,6 @@ import InnerEar.Widgets.Labels
 evalGraphFrame :: MonadWidget t m =>  String -> String -> m ()
 evalGraphFrame xMainLabel graphLabel = do
   faintedXaxis "faintedXaxis"
-  --faintedYaxis "faintedYaxis"
   hzMainLabel "hzMainLabel" xMainLabel
   countMainLabel "countMainLabel" "#"
   percentageMainLabel "percentageMainLabel" "%"

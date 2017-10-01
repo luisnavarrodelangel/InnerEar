@@ -306,10 +306,10 @@ position: relative;
 .hzMainLabel {
   width: 15px;
   height: 10%;
-  font-size:  12px;
+  font-size:  50%;
   position: relative;
-  left: 12px;
-  top: 83%;
+  left:4%;
+  top:15%;
 
 }
 
