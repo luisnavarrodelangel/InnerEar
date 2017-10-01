@@ -217,15 +217,9 @@ button.correctButton{
     background-color: #2F4F4F;
    position: relative;
    top: 16.5%;
-  }
 
-.segmentedXaxis {
-  width : 10%;
-  height: 1%;
-  background-color: #2F4F4F;
- position: relative;
- top: 16.5%;
-}
+
+  }
 
 .faintedYaxis {
     width : 1%;
@@ -279,7 +273,7 @@ position: relative;
    width: 15px;
    height: 10%;
    position: relative;
-   top: 8%;
+   top: 9%;
   left: 4%;
 }
 
@@ -288,7 +282,7 @@ position: relative;
    width: 15px;
    height: 10%;
    position: relative;
-   top: 9%;
+   top: 11%;
   left: 4%;
 }
 
@@ -308,8 +302,8 @@ position: relative;
   height: 10%;
   font-size:  50%;
   position: relative;
-  left:4%;
-  top:15%;
+  left: 4%;
+  top: 15%;
 
 }
 
@@ -436,8 +430,6 @@ input.soundSourceDropdown{
   display:inline-block;
   width:100%;
   height:100%;
-  position: relative;
-  top: 40%;
 
 }
 
@@ -458,10 +450,10 @@ input.soundSourceDropdown{
 .scoreBarWrapperFiveBand {
   display: inline-block;
   position: relative;
-  bottom:50%;
+  bottom:49%;
   max-width: 50%;
-
 }
+
 .explanation{
   text-align: justify;
   margin:2%;
@@ -557,7 +549,8 @@ button.closeExerciseButton {
 
 .journal {
   margin-left: 25px;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   border-radius: 10px;
   background-color: grey;
   width: 50%;
@@ -570,21 +563,13 @@ button.closeExerciseButton {
 }
 
 div.journalItem {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
 }
 
-textarea.journalItem {
+.journalitem input[type="text"] {
   flex-grow: 1;
-  flex-shrink: 1;
-  background-color: black;
-  color: white;
-  font-size: 150%;
-  width: 100%;
-  height: 100%;
-  resize: none;
+}
+
+button.journalitem {
 }
 
 .configWidget {
