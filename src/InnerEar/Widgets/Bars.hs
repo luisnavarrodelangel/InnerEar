@@ -153,9 +153,6 @@ faintedXaxis s = svgClass "svg" s $ return ()
 faintedLineToAdjustGraph :: MonadWidget t m => String -> m ()
 faintedLineToAdjustGraph c = svgClass "svg" c $ return ()
 
-segmentedXaxis :: MonadWidget t m => String -> m ()
-segmentedXaxis s = svgClass "svg" s $ return ()
-
 -- A dynamic bar for (Maybe Score)
 scoreBar :: MonadWidget t m => String -> Dynamic t (Maybe Score) -> m ()
 scoreBar key score  = elClass "div" "scoreBarWrapper" $ do
