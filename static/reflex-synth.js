@@ -1,9 +1,8 @@
-
 var bufferData
 var buffers = {}
+var overlappedDictionary = {}
 var lastPlayingBufferNode;
 var userAudioNodes = {}
-
 
 function startSilentNode () {
   // a permanent buffernode sound  so the sound icon always displays at the
@@ -12,7 +11,6 @@ function startSilentNode () {
   // This wasn't working with just a simple oscillator with a gain of 0 applied for some reason.
   //  (hence the looped buffernode)
   var emptyArrayBuffer = ___ac.createBuffer(1, ___ac.sampleRate * 10,___ac.sampleRate );
-
   // Necessary for some reason to insert all 0's (even though it is initialized  as such)
   for (var channel = 0; channel < emptyArrayBuffer.numberOfChannels; channel++) {
     var nowBuffering = emptyArrayBuffer.getChannelData(channel);
@@ -25,19 +23,6 @@ function startSilentNode () {
   emptyNode.loop = true;
   emptyNode.connect(___ac.destination)
   emptyNode.start();
-
-}
-
-function test(s){
-  console.log(s)
-  console.log(typeof(s))
-  var a = document.getElementById(s);
-  while (a==null){
-    a = document.getElementById(s);
-  }
-  console.log(a)
-
-  return ___ac.createMediaElementSource(a);
 }
 
 
@@ -72,6 +57,28 @@ function createClipAtWaveShaper (db){
   return distortion
 }
 
+function connectAdditiveNode(listOfNodes, toNode){
+  console.log("connecting...")
+  for(var i=0; i< listOfNodes.length; i=i+1){
+    listOfNodes[i].connect(toNode)
+  }
+}
+
+//Need to stop and disconnect all sources
+function stopOverlappedSound(id){
+  if (overlappedDictionary[id] != undefined){
+    var nodes = overlappedDictionary[id]
+
+    for (var i=0; i<nodes.length; i=i+1){
+      console.log("STOPING AN OVERLAPPED NODE NOW")
+      console.log(typeof(nodes[i]))
+      nodes[i].stop()
+      nodes[i].disconnect();
+    }
+    overlappedDictionary[id] = undefined
+  }
+}
+
 function getDistortAtDbFunc(db){
   if (db==undefined){
     console.log ("WARNING - spDistortAtDb wasn't provided an argument containing a decibel value - value of 0dB used")
@@ -100,15 +107,33 @@ function setGain(db, node){
   node.gain.value = amp;
 }
 
-function createCompressorNode (threshold, knee, ratio, reduction, attack, release){
-  var comp = ___ac.createDynamicCompressor()
+function createCompressorNode (threshold, knee, ratio, attack, release){
+  var comp = ___ac.createDynamicsCompressor()
   comp.threshold.value = threshold;
   comp.knee.value = knee;
   comp.ratio.value = ratio;
-  comp.reduction.value = reduction;
   comp.attack.value = attack;
   comp.release.value = release;
   return comp;
+}
+
+// 'url' is a string to a local (ie.. on the server) impulse response buffer (audio file)
+function createConvolverNode (url){
+  var conv = ___ac.createConvolver();
+
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
+  request.onload = function() {
+    var audioData = request.response;
+
+    ___ac.decodeAudioData(audioData, function(buffer) {
+        conv.buffer = buffer;
+      },
+      function(e){ console.log("Error with decoding audio data " + e); });
+  } //request onload
+  request.send();
+  return conv;
 }
 
 function createMediaNode (id){
@@ -222,7 +247,9 @@ function playBufferNode(id, s, e, loop, node){
   node.loopStart = start;
   node.loopEnd = e*node.buffer.duration;
   node.loop = loop
-  node.start(___ac.currentTime, start, end)
+  // node.start(___ac.currentTime, start, end)
+  node.start(___ac.currentTime, start)
+
   lastPlayingBufferNode = node;
   }
   else {
@@ -248,7 +275,7 @@ function createBufferSourceNodeFromID(id,start,end,loop){
     return source;
   }
    else{
-     alert("Please load a sound file to use as a source or select pink noise  or white noise from the dropdown menu on the right.")
+     alert("Please load a sound file to use as a source.")
    }
    return source;
 }
@@ -397,13 +424,19 @@ function loadAndDrawBuffer(inputId, canvas){
 }
 
 function startNode(node){
-  if (lastPlayingBufferNode){
-    lastPlayingBufferNode.stop()
-  }
+  // if (lastPlayingBufferNode){
+  //   lastPlayingBufferNode.stop()
+  // }
   console.log(node)
   node.start()
 }
 
+// for starting an additive node - calls start on a list of nodes
+function startNodes(l){
+  for (var i=0; i<l.length; i=i+1){
+    l[i].start();
+  }
+}
 
 function stopNodeByID(id){
   var obj = userAudioNodes[id]
@@ -431,10 +464,8 @@ function drawSineWave (canvas){
 
 
   for (var i =0; i < canvas.width; i=i+1){
-    console.log("asdf")
     var x = i;
     var y = (Math.sin(i*(Math.PI*2)/width)*(-1)*height/2+(height/2));
-    console.log("x: "+x+" y: "+y)
     ctx.fillRect(x, y, 1, 1);
   }
 

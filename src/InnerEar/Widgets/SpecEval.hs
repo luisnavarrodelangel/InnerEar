@@ -113,9 +113,6 @@ displayHistoricalEvaluationGraph graphLabel qLabel possibilities currentScoreMap
    g k d = scoreBar k d
 
 
-
-
---testing
 {-
 displaySpectrumEvaluationGraphs :: MonadWidget t m => m ()
 displaySpectrumEvaluationGraphs = do

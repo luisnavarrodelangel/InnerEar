@@ -52,10 +52,10 @@ includedExercises = [
   ThresholdOfSilence,
   HarmonicDistortion,
   BoostOrCut,
-  FiveBandBoostCut
---  AddedWhiteNoise,
+  FiveBandBoostCut,
+ AddedWhiteNoise,
 --  RT60,
---  Compression,
+ Compression
 --  LeftRightCentre
   ]
 

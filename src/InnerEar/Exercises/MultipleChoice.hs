@@ -79,7 +79,7 @@ multipleChoiceQuestionWidget maxTries answers exId exInstructions cWidget render
   modes <- mapDyn answerButtonModes multipleChoiceState
   modes' <- mapM (\x-> mapDyn (!!x) modes) [0,1..9]
   scores <- mapDyn scoreMap multipleChoiceState
-
+  
   -- user interface
   (closeExercise,playQuestion,answerPressed,nextQuestionNav) <- elClass "div" "topRow" $ do
     w <- elClass "div" "topRowHeader" $ do
@@ -102,7 +102,7 @@ multipleChoiceQuestionWidget maxTries answers exId exInstructions cWidget render
   journalData <- elClass "div" "bottomRow" $ do
     elClass "div" "evaluation" $ do
       eWidget scores
-      display scores
+      -- display scores
     elClass "div" "journal" $ journalWidget
 
   let answerEvent = gate (fmap (==AnswerMode) . fmap mode . current $ multipleChoiceState) answerPressed
