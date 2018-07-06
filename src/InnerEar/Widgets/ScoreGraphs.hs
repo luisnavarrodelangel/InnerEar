@@ -46,14 +46,14 @@ graphGen xPoints yPoints= do
 
 --an oval graph generator
 graphGenOval :: MonadWidget t m => Dynamic t (Maybe GScore) -> m ()
-graphGenOval score = do
-  gamifiedGraphLabel (constDyn "ovalGraphLabel") score
+graphGenOval score =  elClass "div" "graphGenOval" $ do
+  gamifiedGraphLabel "ovalGraphLabel" score
   ovalScoreBar score
   return ()
 
 --a cirular graph generator
 graphGenCircular :: MonadWidget t m => Dynamic t (Maybe GScore) -> m ()
-graphGenCircular score = do 
-  gamifiedGraphLabel (constDyn "circularGrapLabel") score
+graphGenCircular score = elClass "div" "graphGenCircular" $ do
+  gamifiedGraphLabel "circularGrapLabel" score
   percentageCircleGraph score
   return ()

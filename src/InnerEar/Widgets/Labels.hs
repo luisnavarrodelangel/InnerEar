@@ -62,8 +62,6 @@ hzLabel c s = do
 xLabel :: MonadWidget t m => String -> String ->  m ()
 xLabel c s = elClass "div" c  $ text s
 
-
-
 -- A dynamic label for Score with CSS style
 dynScoreLabel :: forall t m. MonadWidget t m => Dynamic t String -> Dynamic t Double -> m ()
 dynScoreLabel cssClass percent = do
@@ -117,11 +115,12 @@ dynGraphLabel c label = do
       dynText label -- m ()
       return ()
 
-gamifiedGraphLabel :: MonadWidget t m => Dynamic t String -> Dynamic t (Maybe GScore) -> m ()
+--a label for gamified scores
+gamifiedGraphLabel :: MonadWidget t m => String -> Dynamic t (Maybe GScore) -> m ()
 gamifiedGraphLabel c score = do
   score' <- mapDyn (maybe (GScore 0.0 50.0) id) score
   score''  <- mapDyn show score' --Dynamic t Double
-  class' <- mapDyn (singleton "class") c
-  elDynAttr "div" class' $ do
+  let c' = constDyn (singleton "class" c)
+  elDynAttr "div" c' $ do
     dynText score''
     return ()
